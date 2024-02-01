@@ -20,10 +20,17 @@ stages:
     pool:
       vmImage: ubuntu-latest
     steps:
+
     - task: Docker@2
-      displayName: Build an image
       inputs:
-        command: build
-        dockerfile: '$(Build.SourcesDirectory)/Dockerfile'
+        containerregistry: 'dockerhub'
+        command: 'login'
+
+    - task: Docker@2
+      displayName: Build an image and pushing to duckerhub
+      inputs:
+        repository: 'Oranhack7/SmallProject'
+        command: buildAndPush
+        dockerfile: '**/Dockerfile'
         tags: |
           $(tag)
